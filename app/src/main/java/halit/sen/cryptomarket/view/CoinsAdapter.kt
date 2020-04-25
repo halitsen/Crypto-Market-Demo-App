@@ -1,13 +1,16 @@
 package halit.sen.cryptomarket.view
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedPrice
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.model.data.Coin
+import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedPercentageValue
+import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedTime
 import kotlinx.android.synthetic.main.coin_list_item.view.*
-import java.text.DecimalFormat
 
 class CoinsAdapter (): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
 
@@ -28,6 +31,12 @@ class CoinsAdapter (): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
 
     override fun onBindViewHolder(holder: CoinsViewHolder, position: Int) {
         holder.bind(data.get(position))
+        holder.itemView.setOnClickListener {
+            val detailIntent = Intent(holder.itemView.context, DetailActivity::class.java)
+            detailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            detailIntent.putExtra("coin", data.get(position))
+            holder.itemView.context.startActivity(detailIntent)
+        }
     }
 
 
@@ -42,22 +51,12 @@ class CoinsAdapter (): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
 
         fun bind(coin: Coin){
 
-            val price  = java.lang.Double.valueOf(coin.quote.usd.price)
-            val formattedPrice = DecimalFormat("0.000").format(price)
-
-            val floatIntex = coin.quote.usd.percentChangePerDay.indexOf('.')
-            val formattedDailyChange = coin.quote.usd.percentChangePerDay
-                .substring(0, floatIntex + 3)
-
-            val timeIndex =coin.lastUpdated.indexOf('T')
-            val formattedTime = coin.lastUpdated.substring(timeIndex+1,timeIndex +9)
-
             coinName.text = coin.name
             coinSymbol.text = coin.symbol
-            coinPrice.text = "$ $formattedPrice"
-            lastUpdate.text = formattedTime
+            coinPrice.text = getFormattedPrice((coin.quote.usd.price).toDouble())
+            lastUpdate.text = getFormattedTime(coin.lastUpdated)
             //todo burası kullanıcı seçimine göre günlük,saatlik,haftalık olarak değişecek (shared preferences ta tutulacak.)
-            coinChangePercentage.text = "$formattedDailyChange %"
+            coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerDay).toDouble())
             if((coin.quote.usd.percentChangePerDay).toDouble() > 0){
                 coinArrow.setImageResource(R.drawable.green_arrow_icon)
             }else{

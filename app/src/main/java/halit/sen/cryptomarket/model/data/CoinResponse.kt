@@ -1,6 +1,7 @@
 package halit.sen.cryptomarket.model.data
 
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 data class CoinResponse(
     val status: Status,
@@ -20,10 +21,12 @@ data class Coin(
     val name: String,
     val symbol: String,
     @SerializedName("last_updated") val lastUpdated: String,
+    @SerializedName("max_supply") val maxSupply: String,
+    @SerializedName("total_supply") val totalSupply: String,
     val quote: Quote
-)
+):Serializable
 
-data class Quote(@SerializedName("USD") val usd: Usd)
+data class Quote(@SerializedName("USD") val usd: Usd):Serializable
 
 data class Usd(
     val price: String,
@@ -32,6 +35,6 @@ data class Usd(
     @SerializedName("percent_change_24h") val percentChangePerDay: String,
     @SerializedName("percent_change_7d") val percentChangePerWeek: String,
     @SerializedName("market_cap") val marketCap: String
-    )
+    ):Serializable
 
 
