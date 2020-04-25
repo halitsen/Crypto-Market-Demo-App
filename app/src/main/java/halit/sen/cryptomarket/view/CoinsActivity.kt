@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kaopiz.kprogresshud.KProgressHUD
-import halit.sen.cryptomarket.AppUtils
+import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
 import halit.sen.cryptomarket.viewModel.CoinsViewModel
