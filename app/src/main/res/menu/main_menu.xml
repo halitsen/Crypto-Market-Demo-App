@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/favorite"
+        android:title=""
+        android:icon="@drawable/ic_star"
+        app:showAsAction="ifRoom">
+    </item>
+
+    <item
+        android:id="@+id/hour"
+        android:title="Last Hour Change"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/daily"
+        android:title="24 Hour Change"
+        app:showAsAction="never">
+    </item>
+
+    <item
+        android:id="@+id/weekly"
+        android:title="7 Day Change"
+        app:showAsAction="never">
+    </item>
+
+</menu>

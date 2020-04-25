@@ -1,5 +1,6 @@
 package halit.sen.cryptomarket.model
 
+import halit.sen.cryptomarket.model.data.CoinResponse
 import io.reactivex.Single
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

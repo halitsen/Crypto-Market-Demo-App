@@ -3,10 +3,9 @@ package halit.sen.cryptomarket.viewModel
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import halit.sen.cryptomarket.model.Coin
-import halit.sen.cryptomarket.model.CoinResponse
+import halit.sen.cryptomarket.model.data.Coin
+import halit.sen.cryptomarket.model.data.CoinResponse
 import halit.sen.cryptomarket.model.CoinService
-import io.reactivex.Single
 import io.reactivex.SingleObserver
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
