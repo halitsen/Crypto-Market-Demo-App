@@ -66,37 +66,41 @@ class DetailViewModel(val coin: Coin, val preferences: SharedPreference) : ViewM
             AppUtils.getFormattedPercentageValue((coin.quote.usd.marketCap).toDouble())
         _totalSupply.value = coin.totalSupply
         _maxSupply.value = coin.maxSupply
-        isCoinFavorite()
+        if(isCoinFavorite()){
+            _addFavText.value = "Remove from Favorites"
+        }else{
+            _addFavText.value = "Add to Favorites"
+        }
+
     }
 
     fun isCoinFavorite(): Boolean {
         val coins = preferences.getCoins()
         var isFav = false
-        if (coins.size == 0) {
-            _addFavText.value = "Add to Favorites"
-        } else {
             for (c in coins) {
                 if (c.id.equals(coin.id)) {
-                    _addFavText.value = "Remove from Favorites"
                     isFav = true
-                } else {
-                    _addFavText.value = "Add to Favorites"
                 }
-            }
         }
         return isFav
     }
 
     fun addFavorites() {
         val coins = preferences.getCoins()
-        coins.add(coin)
+            coins.add(coin)
         preferences.setCoins(coins)
         _addFavText.value = "Remove from Favorites"
     }
 
     fun removeFavorite() {
         val coins = preferences.getCoins()
-        coins.remove(coin)
+        val coinToRemove = ArrayList<Coin>()
+            for (c in coins){
+                if(c.id.equals(coin.id)){
+                    coinToRemove.add(c)
+                }
+            }
+        coins.removeAll(coinToRemove)
         preferences.setCoins(coins)
         _addFavText.value = "Add to Favorites"
     }

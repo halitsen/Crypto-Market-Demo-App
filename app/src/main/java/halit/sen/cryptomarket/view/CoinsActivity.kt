@@ -9,10 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.SimpleItemAnimator
 import com.kaopiz.kprogresshud.KProgressHUD
 import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
+import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.CoinsViewModel
 
 class CoinsActivity : AppCompatActivity() {
@@ -20,24 +22,30 @@ class CoinsActivity : AppCompatActivity() {
     lateinit var binding: ActivityCoinsBinding
     private lateinit var progress: KProgressHUD
     private lateinit var coinsAdapter: CoinsAdapter
+    private lateinit var preferences: SharedPreference
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
+        preferences = SharedPreference(this)
         binding.lifecycleOwner = this
         viewModel = ViewModelProviders.of(this).get(CoinsViewModel::class.java)
         viewModel.refresh()
         progress = KProgressHUD(this)
         AppUtils.createProgress(progress)
         coinsAdapter =
-            CoinsAdapter()//todo buraya parametre olarak kullanıcının değişim seçimi gidecek..
+            CoinsAdapter(preferences)//todo buraya parametre olarak kullanıcının değişim seçimi gidecek..
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         binding.coinRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = coinsAdapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = true
+            setHasFixedSize(true)
         }
+
         observeViewModel()
     }
 
@@ -47,9 +55,26 @@ class CoinsActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.favorite) {
-            val favoritesIntent = Intent(this, FavoritesActivity::class.java)
-            startActivity(favoritesIntent)
+
+        when (item.itemId) {
+            R.id.favorite -> {
+                val favoritesIntent = Intent(this, FavoritesActivity::class.java)
+                favoritesIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(favoritesIntent)
+            }
+            R.id.hour -> {
+                preferences.setpercentageChoice("perHour")
+                coinsAdapter.notifyDataSetChanged()
+            }
+            R.id.daily -> {
+                preferences.setpercentageChoice("daily")
+                coinsAdapter.notifyDataSetChanged()
+
+            }
+            R.id.weekly -> {
+                preferences.setpercentageChoice("weekly")
+                coinsAdapter.notifyDataSetChanged()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

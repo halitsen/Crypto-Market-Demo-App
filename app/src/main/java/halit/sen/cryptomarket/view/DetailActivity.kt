@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
@@ -34,16 +35,33 @@ class DetailActivity : AppCompatActivity() {
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailViewModel::class.java)
         binding.detailViewModel = viewModel
         binding.setLifecycleOwner(this)
-        setSupportActionBar(binding.detailToolbar);
+        setSupportActionBar(binding.detailToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
 
         binding.backIcon.setOnClickListener {
             finish()
         }
-
         binding.addFav.setOnClickListener {
             viewModel.onFavoriteClick()
         }
 
+        setArrows()
+    }
+    private fun setArrows(){
+            if((coin.quote.usd.percentChangePerHour).toDouble() >= 0){
+                binding.oneHourPercentArrow.setImageResource(R.drawable.green_arrow_icon)
+            }else{
+                binding.oneHourPercentArrow.setImageResource(R.drawable.red_arrow_icon)
+            }
+            if((coin.quote.usd.percentChangePerWeek).toDouble() >= 0){
+                binding.oneWeekPercentArrow.setImageResource(R.drawable.green_arrow_icon)
+            }else{
+                binding.oneWeekPercentArrow.setImageResource(R.drawable.red_arrow_icon)
+            }
+            if((coin.quote.usd.percentChangePerDay).toDouble()>= 0){
+                binding.oneDayPercentArrow.setImageResource(R.drawable.green_arrow_icon)
+            }else{
+                binding.oneDayPercentArrow.setImageResource(R.drawable.red_arrow_icon)
+            }
     }
 }

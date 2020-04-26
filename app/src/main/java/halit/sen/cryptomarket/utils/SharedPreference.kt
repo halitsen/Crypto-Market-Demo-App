@@ -9,7 +9,7 @@ class SharedPreference(context: Context) {
 
     val PREFERENCE_NAME = "cryptoSharedPreference"
     val COINS = "coins"
-    val RATE_CHANGE = "rate"
+    val CHOICE = "choice"
 
     val preference = context.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE)
 
@@ -34,14 +34,14 @@ class SharedPreference(context: Context) {
         editor.apply()
     }
 
-    fun setRateChange(mode: String){
+    fun setpercentageChoice(choice: String){
         val editor = preference.edit()
-        editor.putString(RATE_CHANGE, mode)
+        editor.putString(CHOICE, choice)
         editor.apply()
     }
 
-    fun getRateChange():String? {
-        return preference.getString(RATE_CHANGE, "")
+    fun getpercentageChoice():String? {
+        return preference.getString(CHOICE, "")
     }
 
 }

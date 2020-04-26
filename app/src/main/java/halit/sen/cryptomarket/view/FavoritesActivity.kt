@@ -1,5 +1,6 @@
 package halit.sen.cryptomarket.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -9,12 +10,13 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kaopiz.kprogresshud.KProgressHUD
-import halit.sen.cryptomarket.R
-import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
 import halit.sen.cryptomarket.databinding.ActivityFavoritesBinding
 import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.*
+import android.app.Activity
+import halit.sen.cryptomarket.R
+
 
 class FavoritesActivity : AppCompatActivity() {
 
@@ -38,7 +40,7 @@ class FavoritesActivity : AppCompatActivity() {
         setSupportActionBar(binding.favoritesToolbar);
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         coinsAdapter =
-            CoinsAdapter()//todo buraya parametre olarak kullanıcının değişim seçimi gidecek..
+            CoinsAdapter(preferences)//todo buraya parametre olarak kullanıcının değişim seçimi gidecek..
         binding.coinRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = coinsAdapter
@@ -48,6 +50,8 @@ class FavoritesActivity : AppCompatActivity() {
         observeViewModel()
 
         binding.backIcon.setOnClickListener {
+            val intent = Intent()
+            setResult(Activity.RESULT_CANCELED, intent)
             finish()
         }
 
@@ -83,14 +87,26 @@ class FavoritesActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-/*
-            R.id.hour -> coinsAdapter.notifyDataSetChanged()
-            R.id.weekly -> true
-            R.id.daily -> //fdgd
-            else -> false
-            */
+            halit.sen.cryptomarket.R.id.hour -> {
+                preferences.setpercentageChoice("perHour")
+                coinsAdapter.notifyDataSetChanged()
+            }
+            R.id.daily -> {
+                preferences.setpercentageChoice("daily")
+                coinsAdapter.notifyDataSetChanged()
+
+            }
+            R.id.weekly -> {
+                preferences.setpercentageChoice("weekly")
+                coinsAdapter.notifyDataSetChanged()
+            }
         }
 
         return super.onOptionsItemSelected(item)
+    }
+
+    override fun onResume() {
+        viewModel.refresh()
+        super.onResume()
     }
 }
