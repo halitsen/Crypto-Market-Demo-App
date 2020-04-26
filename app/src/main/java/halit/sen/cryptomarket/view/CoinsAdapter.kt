@@ -10,11 +10,10 @@ import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.model.data.Coin
 import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedPercentageValue
 import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedTime
+import halit.sen.cryptomarket.utils.SharedPreference
 import kotlinx.android.synthetic.main.coin_list_item.view.*
 
-class CoinsAdapter (): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
-
-    //todo parametre olarak gelen change tercihi 3 alandan hangisinin visible olacağını kontrol edecek sadece
+class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
 
     var data = listOf<Coin>()
         set(value) {
@@ -30,7 +29,7 @@ class CoinsAdapter (): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
 
 
     override fun onBindViewHolder(holder: CoinsViewHolder, position: Int) {
-        holder.bind(data.get(position))
+        holder.bind(data.get(position),preference)
         holder.itemView.setOnClickListener {
             val detailIntent = Intent(holder.itemView.context, DetailActivity::class.java)
             detailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -49,21 +48,46 @@ class CoinsAdapter (): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
         val coinArrow = view.coin_percentage_arrow
         val coinChangePercentage = view.coin_change_percentage
 
-        fun bind(coin: Coin){
+        fun bind(coin: Coin, preferences:SharedPreference){
 
+            when(preferences.getpercentageChoice()){
+                "perHour" ->{
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())
+                    if((coin.quote.usd.percentChangePerHour).toDouble() > 0){
+                        coinArrow.setImageResource(R.drawable.green_arrow_icon)
+                    }else{
+                        coinArrow.setImageResource(R.drawable.red_arrow_icon)
+                    }
+                }
+                "daily"->{
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerDay).toDouble())
+                    if((coin.quote.usd.percentChangePerDay).toDouble() > 0){
+                        coinArrow.setImageResource(R.drawable.green_arrow_icon)
+                    }else{
+                        coinArrow.setImageResource(R.drawable.red_arrow_icon)
+                    }
+                }
+                "weekly"->{
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerWeek).toDouble())
+                    if((coin.quote.usd.percentChangePerWeek).toDouble() > 0){
+                        coinArrow.setImageResource(R.drawable.green_arrow_icon)
+                    }else{
+                        coinArrow.setImageResource(R.drawable.red_arrow_icon)
+                    }
+                }
+                else ->{
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())
+                    if((coin.quote.usd.percentChangePerHour).toDouble() > 0){
+                        coinArrow.setImageResource(R.drawable.green_arrow_icon)
+                    }else{
+                        coinArrow.setImageResource(R.drawable.red_arrow_icon)
+                    }
+                }
+            }
             coinName.text = coin.name
             coinSymbol.text = coin.symbol
             coinPrice.text = getFormattedPrice((coin.quote.usd.price).toDouble())
             lastUpdate.text = getFormattedTime(coin.lastUpdated)
-            //todo burası kullanıcı seçimine göre günlük,saatlik,haftalık olarak değişecek (shared preferences ta tutulacak.)
-            coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerDay).toDouble())
-            if((coin.quote.usd.percentChangePerDay).toDouble() > 0){
-                coinArrow.setImageResource(R.drawable.green_arrow_icon)
-            }else{
-                coinArrow.setImageResource(R.drawable.red_arrow_icon)
-            }
-
-
         }
 
     }
