@@ -66,19 +66,22 @@ class DetailViewModel(val coin: Coin, val preferences: SharedPreference) : ViewM
             AppUtils.getFormattedPercentageValue((coin.quote.usd.marketCap).toDouble())
         _totalSupply.value = coin.totalSupply
         _maxSupply.value = coin.maxSupply
-        _addFavText.value = "Add to Favorites" //todo favorilerdeyse favoriden çıkar olacak.
         isCoinFavorite()
     }
 
-    fun isCoinFavorite():Boolean{
+    fun isCoinFavorite(): Boolean {
         val coins = preferences.getCoins()
-        var isFav =false
-        for(c in coins){
-            if(c.id.equals(coin.id)){
-                _addFavText.value = "Remove from Favorites"
-                isFav = true
-            }else{
-                _addFavText.value = "Add to Favorites"
+        var isFav = false
+        if (coins.size == 0) {
+            _addFavText.value = "Add to Favorites"
+        } else {
+            for (c in coins) {
+                if (c.id.equals(coin.id)) {
+                    _addFavText.value = "Remove from Favorites"
+                    isFav = true
+                } else {
+                    _addFavText.value = "Add to Favorites"
+                }
             }
         }
         return isFav
@@ -91,17 +94,17 @@ class DetailViewModel(val coin: Coin, val preferences: SharedPreference) : ViewM
         _addFavText.value = "Remove from Favorites"
     }
 
-    fun removeFavorite(){
+    fun removeFavorite() {
         val coins = preferences.getCoins()
         coins.remove(coin)
         preferences.setCoins(coins)
         _addFavText.value = "Add to Favorites"
     }
 
-    fun onFavoriteClick(){
-        if(isCoinFavorite()){
+    fun onFavoriteClick() {
+        if (isCoinFavorite()) {
             removeFavorite()
-        }else{
+        } else {
             addFavorites()
         }
     }
