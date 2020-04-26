@@ -1,5 +1,6 @@
 package halit.sen.cryptomarket.view
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -47,7 +48,8 @@ class CoinsActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.favorite) {
-            //viewModel.onProfileClicked()
+            val favoritesIntent = Intent(this, FavoritesActivity::class.java)
+            startActivity(favoritesIntent)
         }
         return super.onOptionsItemSelected(item)
     }

@@ -26,7 +26,6 @@ class DetailActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail)
         preferences = SharedPreference(this)
 
-        preferences.getCoins()
         val bundle: Bundle? = intent.extras
         if (bundle != null) {
             coin = bundle.getSerializable("coin") as Coin
