@@ -45,7 +45,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
 
-
+    implementation 'com.google.code.gson:gson:2.8.5'
     //retrofit RxJava
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
@@ -62,7 +62,6 @@ dependencies {
     //recyclerView
     implementation "com.android.support:recyclerview-v7:$supportVersion"
     //glide, progress
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
     implementation 'com.kaopiz:kprogresshud:1.1.0'
 
     //lifecycle

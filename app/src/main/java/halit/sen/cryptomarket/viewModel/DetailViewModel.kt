@@ -1,12 +1,14 @@
 package halit.sen.cryptomarket.viewModel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import halit.sen.cryptomarket.model.data.Coin
 import halit.sen.cryptomarket.utils.AppUtils
+import halit.sen.cryptomarket.utils.SharedPreference
 
-class DetailViewModel(val coin: Coin): ViewModel(){
+class DetailViewModel(val coin: Coin, val preferences: SharedPreference) : ViewModel() {
 
 
     private val _title = MutableLiveData<String>()
@@ -52,14 +54,56 @@ class DetailViewModel(val coin: Coin): ViewModel(){
     init {
         _price.value = AppUtils.getFormattedPrice((coin.quote.usd.price).toDouble())
         _title.value = coin.name
-        _oneHourChange.value = AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())
-        _dailyChange.value = AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerDay).toDouble())
-        _weeklyChange.value = AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerWeek).toDouble())
-        _dailyVolume.value = AppUtils.getFormattedPercentageValue((coin.quote.usd.volume24Hour).toDouble())
-        _marketCap.value = AppUtils.getFormattedPercentageValue((coin.quote.usd.marketCap).toDouble())
+        _oneHourChange.value =
+            AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())
+        _dailyChange.value =
+            AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerDay).toDouble())
+        _weeklyChange.value =
+            AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerWeek).toDouble())
+        _dailyVolume.value =
+            AppUtils.getFormattedPercentageValue((coin.quote.usd.volume24Hour).toDouble())
+        _marketCap.value =
+            AppUtils.getFormattedPercentageValue((coin.quote.usd.marketCap).toDouble())
         _totalSupply.value = coin.totalSupply
         _maxSupply.value = coin.maxSupply
-        _addFavText.value = "Add Favorites" //todo favorilerdeyse favoriden çıkar olacak.
+        _addFavText.value = "Add to Favorites" //todo favorilerdeyse favoriden çıkar olacak.
+        isCoinFavorite()
+    }
+
+    fun isCoinFavorite():Boolean{
+        val coins = preferences.getCoins()
+        var isFav =false
+        for(c in coins){
+            if(c.id.equals(coin.id)){
+                _addFavText.value = "Remove from Favorites"
+                isFav = true
+            }else{
+                _addFavText.value = "Add to Favorites"
+            }
+        }
+        return isFav
+    }
+
+    fun addFavorites() {
+        val coins = preferences.getCoins()
+        coins.add(coin)
+        preferences.setCoins(coins)
+        _addFavText.value = "Remove from Favorites"
+    }
+
+    fun removeFavorite(){
+        val coins = preferences.getCoins()
+        coins.remove(coin)
+        preferences.setCoins(coins)
+        _addFavText.value = "Add to Favorites"
+    }
+
+    fun onFavoriteClick(){
+        if(isCoinFavorite()){
+            removeFavorite()
+        }else{
+            addFavorites()
+        }
     }
 
 }
