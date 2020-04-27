@@ -2,20 +2,27 @@ package halit.sen.cryptomarket.viewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import halit.sen.cryptomarket.di.DaggerAppComponent
 import halit.sen.cryptomarket.model.CoinService
 import halit.sen.cryptomarket.model.data.Coin
 import halit.sen.cryptomarket.model.data.CoinResponse
 import halit.sen.cryptomarket.utils.SharedPreference
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 class FavoritesViewModel(val preferences: SharedPreference) : ViewModel() {
 
-    private val coinService = CoinService()
+    @Inject
+    lateinit var coinService: CoinService
 
     private val _coins = MutableLiveData<ArrayList<Coin>>()
     val coins
         get() = _coins
+
+    init {
+        DaggerAppComponent.create().inject(this)
+    }
 
     fun refresh(long: Long) {
         getCoins(long)
