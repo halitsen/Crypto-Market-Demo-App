@@ -38,6 +38,9 @@ class FavoritesActivity : AppCompatActivity() {
         if(!AppUtils.hasNetwork(this)){
             AppUtils.openInfoDialog(this, "Check your internet connection and try again!!", "Error")
         }
+        if(preferences.getCoins().size == 0){
+            binding.emptyFavText.visibility = View.VISIBLE
+        }
         val viewModelFactory = FavoritesViewModelFactory(preferences)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(FavoritesViewModel::class.java)
