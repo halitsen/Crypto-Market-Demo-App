@@ -25,17 +25,18 @@ class FavoritesViewModel(val preferences: SharedPreference) : ViewModel() {
         val observable = coinService.getCoins()
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
             .map { result: CoinResponse -> filterFavoriteCoins(result.coins) }
-            .subscribe { coins ->
+            .subscribe({ coins ->
                 _coins.value = coins
+            }) { error -> //do nothing on error
             }
     }
 
-    private fun filterFavoriteCoins(response: ArrayList<Coin>): ArrayList<Coin>{
+    private fun filterFavoriteCoins(response: ArrayList<Coin>): ArrayList<Coin> {
         val userCoins = ArrayList<Coin>()
         val favCoins = preferences.getCoins()
-        for(coin in response){
-            for(favCoin in favCoins){
-                if(favCoin.id == coin.id){
+        for (coin in response) {
+            for (favCoin in favCoins) {
+                if (favCoin.id == coin.id) {
                     userCoins.add(coin)
                 }
             }

@@ -10,11 +10,11 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
-import com.kaopiz.kprogresshud.KProgressHUD
-import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
+import halit.sen.cryptomarket.utils.AppUtils.Companion.hasNetwork
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
+import halit.sen.cryptomarket.utils.AppUtils.Companion.openInfoDialog
 import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.CoinsViewModel
 import io.reactivex.Observable
@@ -25,7 +25,6 @@ import java.util.concurrent.TimeUnit
 class CoinsActivity : AppCompatActivity() {
     lateinit var viewModel: CoinsViewModel
     lateinit var binding: ActivityCoinsBinding
-    private lateinit var progress: KProgressHUD
     private lateinit var coinsAdapter: CoinsAdapter
     private lateinit var preferences: SharedPreference
     private lateinit var disposable: Disposable
@@ -37,14 +36,14 @@ class CoinsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
         preferences = SharedPreference(this)
         binding.lifecycleOwner = this
+        if(!hasNetwork(this)){
+            openInfoDialog(this,"Check your internet connection and try again!!","Error")
+        }
         viewModel = ViewModelProviders.of(this).get(CoinsViewModel::class.java)
-
-        disposable = Observable.interval(1000, 5000,
-            TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
-        progress = KProgressHUD(this)
-        AppUtils.createProgress(progress)
+         disposable = Observable.interval(1000, 5000,
+                TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
         coinsAdapter =
             CoinsAdapter(preferences)
 
@@ -82,7 +81,6 @@ class CoinsActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.coins.observe(this, Observer { coins ->
-            progress.dismiss()
             coins?.let {
                 coinsAdapter.data = coins
             }

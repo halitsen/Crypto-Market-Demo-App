@@ -33,7 +33,6 @@ def lifeCycleExtensionVersion = '1.1.1'
 def supportVersion = '28.0.0'
 def retrofitVersion = '2.3.0'
 def daggerVersion = '2.13'
-def glideVersion = '4.8.0'
 def mockitoVersion = '2.11.0'
 def rxJavaVersion = '2.0.1'
 
@@ -45,6 +44,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'com.google.android.material:material:1.1.0-alpha04'
 
+    // Gson
     implementation 'com.google.code.gson:gson:2.8.5'
     //retrofit RxJava
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -61,14 +61,15 @@ dependencies {
 
     //recyclerView
     implementation "com.android.support:recyclerview-v7:$supportVersion"
-    //glide, progress
-    implementation 'com.kaopiz:kprogresshud:1.1.0'
 
     //lifecycle
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "android.arch.lifecycle:extensions:$lifeCycleExtensionVersion"
 
+    //material dialog
+    implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
+    //test
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"
     testImplementation 'android.arch.core:core-testing:1.1.1'
 

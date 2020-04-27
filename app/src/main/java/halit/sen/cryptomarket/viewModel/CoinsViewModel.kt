@@ -23,8 +23,9 @@ class CoinsViewModel : ViewModel() {
         val observable = coinService.getCoins()
         observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
             .map { result: CoinResponse -> result.coins }
-            .subscribe { coins ->
+            .subscribe({ coins ->
                 _coins.value = coins
+            }) { error -> //does nothing on error}
             }
     }
 }

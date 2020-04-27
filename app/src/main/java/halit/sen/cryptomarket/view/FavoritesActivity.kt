@@ -9,12 +9,12 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kaopiz.kprogresshud.KProgressHUD
 import halit.sen.cryptomarket.databinding.ActivityFavoritesBinding
 import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.*
 import android.app.Activity
+import android.view.View
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
 import io.reactivex.Observable
@@ -27,7 +27,6 @@ class FavoritesActivity : AppCompatActivity() {
 
     private lateinit var viewModel: FavoritesViewModel
     private lateinit var binding: ActivityFavoritesBinding
-    private lateinit var progress: KProgressHUD
     private lateinit var coinsAdapter: CoinsAdapter
     private lateinit var preferences: SharedPreference
     private lateinit var disposable: Disposable
@@ -36,6 +35,9 @@ class FavoritesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_favorites)
         preferences = SharedPreference(this)
+        if(!AppUtils.hasNetwork(this)){
+            AppUtils.openInfoDialog(this, "Check your internet connection and try again!!", "Error")
+        }
         val viewModelFactory = FavoritesViewModelFactory(preferences)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(FavoritesViewModel::class.java)
@@ -50,8 +52,6 @@ class FavoritesActivity : AppCompatActivity() {
                 )
             }
         binding.setLifecycleOwner(this)
-        progress = KProgressHUD(this)
-        AppUtils.createProgress(progress)
         setSupportActionBar(binding.favoritesToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         coinsAdapter =
@@ -98,9 +98,16 @@ class FavoritesActivity : AppCompatActivity() {
 
     private fun observeViewModel() {
         viewModel.coins.observe(this, Observer { coins ->
-            progress.dismiss()
             coins?.let {
-                coinsAdapter.data = coins
+                if(coins.size==0){
+                    binding.coinRecyclerView.visibility = View.GONE
+                    binding.emptyFavText.visibility = View.VISIBLE
+                }else{
+                    binding.coinRecyclerView.visibility = View.VISIBLE
+                    binding.emptyFavText.visibility = View.GONE
+                    coinsAdapter.data = coins
+                }
+
             }
         })
     }

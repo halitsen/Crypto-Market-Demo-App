@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
 
     </data>
@@ -46,6 +47,22 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/empty_fav_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp"
+            android:minLines="3"
+            app:fontFamily="sans-serif"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:text="You dont have a favorite coin yet!"
+            android:layout_centerInParent="true">
+
+        </TextView>
     </RelativeLayout>
 
 </layout>

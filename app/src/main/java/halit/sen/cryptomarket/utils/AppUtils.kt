@@ -1,10 +1,11 @@
 package halit.sen.cryptomarket.utils
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.widget.Toast
-import com.kaopiz.kprogresshud.KProgressHUD
+import com.afollestad.materialdialogs.MaterialDialog
 import halit.sen.cryptomarket.R
 import java.text.DecimalFormat
 
@@ -20,18 +21,17 @@ class AppUtils {
             return isConnected
         }
 
-        fun createProgress(progress: KProgressHUD){
-            progress
-                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
-                .setBackgroundColor(R.color.colorPrimaryDark)
-                .setWindowColor(R.color.colorPrimaryDark)
-                .setLabel("Loading...")
-                .setCancellable(false)
-                .setAnimationSpeed(2)
-                .setDimAmount(0.5f);
-        }
-        fun noInternetWarning(context: Context){
-            Toast.makeText(context,"Check your internet connection!!", Toast.LENGTH_SHORT).show()
+        @SuppressLint("ResourceAsColor")
+        fun openInfoDialog(context: Context, content: String, title: String) {
+            val dialog = MaterialDialog.Builder(context)
+                .title(title)
+                .content(content)
+                .positiveText("OK")
+                .positiveColor(R.color.black)
+                .onPositive { dialog1, which -> dialog1.dismiss() } //todo day mode da 'OK' text görünmüyor..
+                .show()
+            dialog.titleView.textSize = 16f
+            dialog.contentView!!.textSize = 14f
         }
 
         fun getFormattedPrice(price: Double): String{
