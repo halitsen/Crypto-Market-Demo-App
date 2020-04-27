@@ -14,7 +14,8 @@ class AppUtils {
     companion object {
         fun hasNetwork(context: Context): Boolean {
             var isConnected: Boolean = false
-            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            val connectivityManager =
+                context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val activeNetwork: NetworkInfo? = connectivityManager.activeNetworkInfo
             if (activeNetwork != null && activeNetwork.isConnected)
                 isConnected = true
@@ -34,23 +35,26 @@ class AppUtils {
             dialog.contentView!!.textSize = 14f
         }
 
-        fun getFormattedPrice(price: Double): String{
+        fun getFormattedPrice(price: Double): String {
             val formattedPrice = DecimalFormat("0.000").format(price)
             return "$ $formattedPrice"
         }
-        fun getFormattedPercentageValue(percentage: Double):String{
+
+        fun getFormattedPercentageValue(percentage: Double): String {
             val formattedPrice = DecimalFormat("0.00").format(percentage)
             return "$formattedPrice %"
         }
 
-        fun getFormattedTime(time:String):String{
-            val timeIndex =time.indexOf('T')
-            return time.substring(timeIndex+1,timeIndex +9)
+        fun getFormattedTime(time: String): String {
+            val timeIndex = time.indexOf('T')
+            return time.substring(timeIndex + 1, timeIndex + 9)
         }
 
         fun onTimerObservableError(throwable: Throwable, context: Context) {
-            Toast.makeText(context, "OnError in Observable Timer",
-                Toast.LENGTH_LONG).show()
+            Toast.makeText(
+                context, "OnError in Observable Timer",
+                Toast.LENGTH_LONG
+            ).show()
         }
 
 
