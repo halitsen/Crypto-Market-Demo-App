@@ -16,6 +16,11 @@ import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.*
 import android.app.Activity
 import halit.sen.cryptomarket.R
+import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 
 class FavoritesActivity : AppCompatActivity() {
@@ -25,7 +30,7 @@ class FavoritesActivity : AppCompatActivity() {
     private lateinit var progress: KProgressHUD
     private lateinit var coinsAdapter: CoinsAdapter
     private lateinit var preferences: SharedPreference
-
+    private lateinit var disposable: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,19 +39,27 @@ class FavoritesActivity : AppCompatActivity() {
         val viewModelFactory = FavoritesViewModelFactory(preferences)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(FavoritesViewModel::class.java)
+        disposable = Observable.interval(
+            1000, 5000,
+            TimeUnit.MILLISECONDS
+        )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable ->
+                onTimerObservableError(
+                    throwable, this
+                )
+            }
         binding.setLifecycleOwner(this)
         progress = KProgressHUD(this)
         AppUtils.createProgress(progress)
-        setSupportActionBar(binding.favoritesToolbar);
+        setSupportActionBar(binding.favoritesToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         coinsAdapter =
-            CoinsAdapter(preferences)//todo buraya parametre olarak kullanıcının değişim seçimi gidecek..
+            CoinsAdapter(preferences)
         binding.coinRecyclerView.apply {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = coinsAdapter
         }
-
-        viewModel.refresh()
         observeViewModel()
 
         binding.backIcon.setOnClickListener {
@@ -54,33 +67,46 @@ class FavoritesActivity : AppCompatActivity() {
             setResult(Activity.RESULT_CANCELED, intent)
             finish()
         }
+    }
 
+    override fun onResume() {
+        super.onResume()
+        if (disposable.isDisposed) {
+            disposable = Observable.interval(
+                1000, 5000,
+                TimeUnit.MILLISECONDS
+            )
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable ->
+                    onTimerObservableError(
+                        throwable,
+                        this
+                    )
+                }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposable.dispose()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposable.dispose()
     }
 
     private fun observeViewModel() {
-
         viewModel.coins.observe(this, Observer { coins ->
             progress.dismiss()
             coins?.let {
                 coinsAdapter.data = coins
             }
         })
-
-        viewModel.coinsLoadError.observe(this, Observer { error ->
-            progress.dismiss()
-        })
-
-        viewModel.isLoading.observe(this, Observer { isLoading ->
-            isLoading?.let {
-                if (isLoading) {
-                    progress.show()
-                }
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.favorites_menu,menu)
+        menuInflater.inflate(R.menu.favorites_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
@@ -105,8 +131,4 @@ class FavoritesActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onResume() {
-        viewModel.refresh()
-        super.onResume()
-    }
 }

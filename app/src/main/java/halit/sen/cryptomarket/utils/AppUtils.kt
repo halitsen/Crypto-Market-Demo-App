@@ -48,5 +48,11 @@ class AppUtils {
             return time.substring(timeIndex+1,timeIndex +9)
         }
 
+        fun onTimerObservableError(throwable: Throwable, context: Context) {
+            Toast.makeText(context, "OnError in Observable Timer",
+                Toast.LENGTH_LONG).show()
+        }
+
+
     }
 }
