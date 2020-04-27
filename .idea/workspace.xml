@@ -20,15 +20,17 @@
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/javaCompile.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/5.4.1/javaCompile/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/libraries/Gradle__com_google_code_gson_gson_2_7_jar.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/SharedPreference.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/SharedPreference.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/app.iml" beforeDir="false" afterPath="$PROJECT_DIR$/app/app.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinApi.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinApi.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinService.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinService.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/AppUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/AppUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsAdapter.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsAdapter.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/DetailActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/DetailActivity.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/DetailViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/DetailViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_favorites.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_favorites.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/coin_list_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/coin_list_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/CoinsViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/CoinsViewModel.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModel.kt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +50,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$/app">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand>
@@ -83,59 +88,30 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsActivity.kt">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-38">
-              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            <state relative-caret-position="-116">
+              <caret line="31" column="54" lean-forward="true" selection-start-line="31" selection-start-column="54" selection-end-line="31" selection-end-column="54" />
               <folding>
-                <element signature="e#2198#2705#0" />
+                <element signature="e#37#852#0" expanded="true" />
+                <element signature="e#2633#2984#0" />
+                <element signature="e#3013#3073#0" />
+                <element signature="e#3101#3160#0" />
+                <element signature="e#2232#2739#0" />
+                <element signature="e#2800#2911#0" />
+                <element signature="e#2977#3554#0" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/DetailActivity.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="139">
-              <caret line="44" selection-start-line="44" selection-end-line="44" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/DetailViewModel.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="124" column="29" selection-start-line="124" selection-start-column="29" selection-end-line="124" selection-end-column="29" />
-              <folding>
-                <element signature="e#42#322#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModel.kt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="38" column="30" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
+            <state relative-caret-position="408">
+              <caret line="32" column="62" lean-forward="true" selection-start-line="32" selection-start-column="62" selection-end-line="32" selection-end-column="62" />
               <folding>
-                <element signature="e#42#521#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="548">
-              <caret line="109" column="24" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
-              <folding>
-                <element signature="e#37#684#0" expanded="true" />
-                <element signature="e#2135#2642#0" />
-                <element signature="e#2880#3147#0" />
+                <element signature="e#42#419#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -167,9 +143,6 @@
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/CoinService.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/CoinApi.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinResponse.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinApi.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/CoinsViewModel.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinService.kt" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/colors.xml" />
@@ -179,20 +152,23 @@
         <option value="$PROJECT_DIR$/app/src/main/res/drawable-xxhdpi/white_rounded_text_bg.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_detail.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/AppUtils.kt" />
-        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/AppUtils.kt" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/DetailViewModelFactory.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModelFactory.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/menu/favorites_menu.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModel.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/SharedPreference.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsAdapter.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/DetailActivity.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/coin_list_item.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsActivity.kt" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_favorites.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt" />
         <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/DetailViewModel.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinApi.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinService.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/CoinsViewModel.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/AppUtils.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsActivity.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt" />
+        <option value="$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModel.kt" />
       </list>
     </option>
   </component>
@@ -248,17 +224,6 @@
               <item name="java" type="edd41e36:AndroidSourceTypeNode" />
               <item name="cryptomarket" type="cbb59c9e:AndroidPsiDirectoryNode" />
               <item name="viewModel" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Crypto Market" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-            </path>
-            <path>
-              <item name="Crypto Market" type="1abcf292:AndroidViewProjectNode" />
-              <item name="app" type="feadf853:AndroidModuleNode" />
-              <item name="res" type="d4f16f75:AndroidResFolderNode" />
-              <item name="layout" type="ddeffd01:AndroidResFolderTypeNode" />
             </path>
             <path>
               <item name="Crypto Market" type="1abcf292:AndroidViewProjectNode" />
@@ -392,7 +357,7 @@
     <editor active="true" />
     <layout>
       <window_info id="Captures" order="0" side_tool="true" weight="0.25" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.25679758" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.25679758" />
       <window_info id="Structure" order="2" side_tool="true" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info id="Build Variants" order="4" side_tool="true" />
@@ -407,11 +372,11 @@
       <window_info anchor="bottom" id="Terminal" order="4" weight="0.31948423" />
       <window_info anchor="bottom" id="Event Log" order="5" side_tool="true" />
       <window_info anchor="bottom" id="Version Control" order="6" />
-      <window_info active="true" anchor="bottom" id="Build" order="7" visible="true" weight="0.32378224" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.36747968" />
       <window_info anchor="bottom" id="Android Profiler" order="8" />
       <window_info anchor="right" id="Device File Explorer" order="0" side_tool="true" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="right" id="Gradle" order="2" />
+      <window_info anchor="right" id="Gradle" order="2" weight="0.32930514" />
       <window_info anchor="right" id="Theme Preview" order="3" />
       <window_info anchor="right" id="Palette&#9;" order="4" />
       <window_info anchor="right" id="Preview" order="5" weight="0.30438066" />
@@ -444,16 +409,6 @@
     </layout-to-restore>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinApi.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" selection-start-line="10" selection-end-line="10" />
-          <folding>
-            <element signature="e#38#90#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
       <provider editor-type-id="android-manifest" />
       <provider selected="true" editor-type-id="text-editor">
@@ -471,13 +426,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build/generated/source/buildConfig/debug/halit/sen/cryptomarket/BuildConfig 2.java" />
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinService.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="25" column="9" selection-start-line="25" selection-start-column="9" selection-end-line="25" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/data/CoinResponse 2.kt" />
     <entry file="file://$PROJECT_DIR$/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
@@ -518,13 +466,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/AppUtils.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="228">
-          <caret line="29" column="37" selection-start-line="29" selection-start-column="37" selection-end-line="29" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build/generated/source/dataBinding/trigger/debug/halit/sen/cryptomarket/DataBindingInfo 2.java" />
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
@@ -558,13 +499,6 @@
           <folding>
             <element signature="e#42#220#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/CoinsViewModel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="36" column="31" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
         </state>
       </provider>
     </entry>
@@ -625,38 +559,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModel.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="38" column="30" selection-start-line="38" selection-start-column="30" selection-end-line="38" selection-end-column="30" />
-          <folding>
-            <element signature="e#42#521#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="548">
-          <caret line="109" column="24" selection-start-line="109" selection-start-column="24" selection-end-line="109" selection-end-column="24" />
-          <folding>
-            <element signature="e#37#684#0" expanded="true" />
-            <element signature="e#2135#2642#0" />
-            <element signature="e#2880#3147#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsActivity.kt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-38">
-          <caret line="26" selection-start-line="26" selection-end-line="26" />
-          <folding>
-            <element signature="e#2198#2705#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/DetailActivity.kt">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="139">
@@ -664,12 +566,95 @@
         </state>
       </provider>
     </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/io.reactivex.rxjava2/rxjava/2.0.1/194434fed571c2038f2d78baad1acd0d86394c3b/rxjava-2.0.1-sources.jar!/io/reactivex/Flowable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="2164" column="33" selection-start-line="2164" selection-start-column="33" selection-end-line="2164" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinApi.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="7" column="19" selection-start-line="7" selection-start-column="19" selection-end-line="7" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/model/CoinService.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="498">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/DetailViewModel.kt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="124" column="29" selection-start-line="124" selection-start-column="29" selection-end-line="124" selection-end-column="29" />
+        <state relative-caret-position="150">
+          <caret line="10" column="38" selection-start-line="10" selection-start-column="38" selection-end-line="10" selection-end-column="71" />
           <folding>
             <element signature="e#42#322#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/CoinsViewModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="22" selection-start-line="15" selection-start-column="22" selection-end-line="15" selection-end-column="22" />
+          <folding>
+            <element signature="e#42#366#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/CoinsActivity.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="52" column="40" selection-start-line="52" selection-start-column="40" selection-end-line="52" selection-end-column="40" />
+          <folding>
+            <element signature="e#37#888#0" expanded="true" />
+            <element signature="e#2566#2933#0" />
+            <element signature="e#2952#3014#0" />
+            <element signature="e#3042#3103#0" />
+            <element signature="e#3102#3609#0" />
+            <element signature="e#2093#2200#0" />
+            <element signature="e#3532#4331#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/utils/AppUtils.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="30" column="36" lean-forward="true" selection-start-line="30" selection-start-column="36" selection-end-line="30" selection-end-column="36" />
+          <folding>
+            <element signature="e#1910#2015#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/view/FavoritesActivity.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-116">
+          <caret line="31" column="54" lean-forward="true" selection-start-line="31" selection-start-column="54" selection-end-line="31" selection-end-column="54" />
+          <folding>
+            <element signature="e#37#852#0" expanded="true" />
+            <element signature="e#2633#2984#0" />
+            <element signature="e#3013#3073#0" />
+            <element signature="e#3101#3160#0" />
+            <element signature="e#2232#2739#0" />
+            <element signature="e#2800#2911#0" />
+            <element signature="e#2977#3554#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/halit/sen/cryptomarket/viewModel/FavoritesViewModel.kt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="32" column="62" lean-forward="true" selection-start-line="32" selection-start-column="62" selection-end-line="32" selection-end-column="62" />
+          <folding>
+            <element signature="e#42#419#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -14,8 +14,13 @@ import com.kaopiz.kprogresshud.KProgressHUD
 import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
+import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
 import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.CoinsViewModel
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import java.util.concurrent.TimeUnit
 
 class CoinsActivity : AppCompatActivity() {
     lateinit var viewModel: CoinsViewModel
@@ -23,6 +28,8 @@ class CoinsActivity : AppCompatActivity() {
     private lateinit var progress: KProgressHUD
     private lateinit var coinsAdapter: CoinsAdapter
     private lateinit var preferences: SharedPreference
+    private lateinit var disposable: Disposable
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,11 +38,15 @@ class CoinsActivity : AppCompatActivity() {
         preferences = SharedPreference(this)
         binding.lifecycleOwner = this
         viewModel = ViewModelProviders.of(this).get(CoinsViewModel::class.java)
-        viewModel.refresh()
+
+        disposable = Observable.interval(1000, 5000,
+            TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
         progress = KProgressHUD(this)
         AppUtils.createProgress(progress)
         coinsAdapter =
-            CoinsAdapter(preferences)//todo buraya parametre olarak kullanıcının değişim seçimi gidecek..
+            CoinsAdapter(preferences)
 
         setSupportActionBar(binding.mainToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
@@ -47,6 +58,35 @@ class CoinsActivity : AppCompatActivity() {
         }
 
         observeViewModel()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (disposable.isDisposed) {
+            disposable = Observable.interval(1000, 5000,
+                TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposable.dispose()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposable.dispose()
+    }
+
+    private fun observeViewModel() {
+        viewModel.coins.observe(this, Observer { coins ->
+            progress.dismiss()
+            coins?.let {
+                coinsAdapter.data = coins
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -79,25 +119,4 @@ class CoinsActivity : AppCompatActivity() {
         return super.onOptionsItemSelected(item)
     }
 
-    private fun observeViewModel() {
-
-        viewModel.coins.observe(this, Observer { coins ->
-            progress.dismiss()
-            coins?.let {
-                coinsAdapter.data = coins
-            }
-        })
-
-        viewModel.coinsLoadError.observe(this, Observer { error ->
-            progress.dismiss()
-        })
-
-        viewModel.isLoading.observe(this, Observer { isLoading ->
-            isLoading?.let {
-                if (isLoading) {
-                    progress.show()
-                }
-            }
-        })
-    }
 }
