@@ -1,6 +1,5 @@
 package halit.sen.cryptomarket.view
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -13,13 +12,12 @@ import halit.sen.cryptomarket.databinding.ActivityFavoritesBinding
 import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.*
-import android.app.Activity
 import android.view.View
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
-import halit.sen.cryptomarket.utils.Const.Companion.DAILY
-import halit.sen.cryptomarket.utils.Const.Companion.PER_HOUR
-import halit.sen.cryptomarket.utils.Const.Companion.WEEKLY
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.DAILY
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.PER_HOUR
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.WEEKLY
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -36,6 +34,45 @@ class FavoritesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initVariables()
+        observeViewModel()
+        binding.backIcon.setOnClickListener {
+            finish()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (disposable.isDisposed) {
+            setDisposable()
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        disposable.dispose()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        disposable.dispose()
+    }
+
+    private fun setDisposable() {
+        disposable = Observable.interval(
+            1000, 5000,
+            TimeUnit.MILLISECONDS
+        )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ long -> viewModel.refresh() }) { throwable ->
+                onTimerObservableError(
+                    throwable,
+                    this
+                )
+            }
+    }
+
+    private fun initVariables() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_favorites)
         preferences = SharedPreference(this)
         if (!AppUtils.hasNetwork(this)) {
@@ -51,16 +88,7 @@ class FavoritesActivity : AppCompatActivity() {
         val viewModelFactory = FavoritesViewModelFactory(preferences)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(FavoritesViewModel::class.java)
-        disposable = Observable.interval(
-            1000, 5000,
-            TimeUnit.MILLISECONDS
-        )
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ long -> viewModel.refresh() }) { throwable ->
-                onTimerObservableError(
-                    throwable, this
-                )
-            }
+        setDisposable()
         binding.setLifecycleOwner(this)
         setSupportActionBar(binding.favoritesToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
@@ -70,40 +98,6 @@ class FavoritesActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = coinsAdapter
         }
-        observeViewModel()
-
-        binding.backIcon.setOnClickListener {
-            val intent = Intent()
-            setResult(Activity.RESULT_CANCELED, intent)
-            finish()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        if (disposable.isDisposed) {
-            disposable = Observable.interval(
-                1000, 5000,
-                TimeUnit.MILLISECONDS
-            )
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ long -> viewModel.refresh() }) { throwable ->
-                    onTimerObservableError(
-                        throwable,
-                        this
-                    )
-                }
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        disposable.dispose()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        disposable.dispose()
     }
 
     private fun observeViewModel() {
@@ -131,16 +125,16 @@ class FavoritesActivity : AppCompatActivity() {
 
         when (item.itemId) {
             R.id.hour -> {
-                preferences.setpercentageChoice(PER_HOUR)
+                preferences.setPercentageChoice(PER_HOUR)
                 coinsAdapter.notifyDataSetChanged()
             }
             R.id.daily -> {
-                preferences.setpercentageChoice(DAILY)
+                preferences.setPercentageChoice(DAILY)
                 coinsAdapter.notifyDataSetChanged()
 
             }
             R.id.weekly -> {
-                preferences.setpercentageChoice(WEEKLY)
+                preferences.setPercentageChoice(WEEKLY)
                 coinsAdapter.notifyDataSetChanged()
             }
         }

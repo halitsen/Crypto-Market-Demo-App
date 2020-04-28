@@ -16,9 +16,8 @@ class FavoritesViewModel(val preferences: SharedPreference) : ViewModel() {
     @Inject
     lateinit var coinService: CoinService
 
-    private val _coins = MutableLiveData<ArrayList<Coin>>()
-    val coins
-        get() = _coins
+    var coins = MutableLiveData<ArrayList<Coin>>()
+    private set
 
     init {
         DaggerAppComponent.create().inject(this)
@@ -33,9 +32,9 @@ class FavoritesViewModel(val preferences: SharedPreference) : ViewModel() {
             .getCoins()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .map { result: CoinResponse -> filterFavoriteCoins(result.coins) }
-            .subscribe({ coins ->
-                _coins.value = coins
+            .map { result: CoinResponse -> filterFavoriteCoins(result.coins!!) }
+            .subscribe({ coinList ->
+                coins.value = coinList
             }) { error -> //do nothing on error
             }
     }

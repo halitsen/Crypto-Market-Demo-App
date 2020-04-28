@@ -7,10 +7,7 @@ import retrofit2.http.GET
 
 interface CoinApi {
 
-
     @GET("v1/cryptocurrency/listings/latest?start=1&convert=USD")
     fun getCoins(): Observable<CoinResponse>
-
-
 
 }
