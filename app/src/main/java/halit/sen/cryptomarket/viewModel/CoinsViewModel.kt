@@ -13,7 +13,7 @@ import javax.inject.Inject
 class CoinsViewModel : ViewModel() {
 
     @Inject
-    lateinit var coinService:CoinService
+    lateinit var coinService: CoinService
 
     private val _coins = MutableLiveData<ArrayList<Coin>>()
     val coins
@@ -23,17 +23,19 @@ class CoinsViewModel : ViewModel() {
         DaggerAppComponent.create().inject(this)
     }
 
-    fun refresh(long: Long) {
-        getCoins(long)
+    fun refresh() {
+        getCoins()
     }
 
-    private fun getCoins(long: Long) {
-        val observable = coinService.getCoins()
-        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+    private fun getCoins() {
+        coinService
+            .getCoins()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .map { result: CoinResponse -> result.coins }
             .subscribe({ coins ->
                 _coins.value = coins
-            }) { error -> //does nothing on error}
+            }) { error -> //does nothing on error
             }
     }
 }

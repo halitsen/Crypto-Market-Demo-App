@@ -52,7 +52,7 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
 
             when(preferences.getpercentageChoice()){
                 "perHour" ->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerHour).toDouble())
                     if((coin.quote.usd.percentChangePerHour).toDouble() > 0){
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
                     }else{
@@ -60,7 +60,7 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
                     }
                 }
                 "daily"->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerDay).toDouble())
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerDay).toDouble())
                     if((coin.quote.usd.percentChangePerDay).toDouble() > 0){
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
                     }else{
@@ -68,7 +68,7 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
                     }
                 }
                 "weekly"->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerWeek).toDouble())
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerWeek).toDouble())
                     if((coin.quote.usd.percentChangePerWeek).toDouble() > 0){
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
                     }else{
@@ -76,7 +76,7 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
                     }
                 }
                 else ->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())
+                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerHour).toDouble())
                     if((coin.quote.usd.percentChangePerHour).toDouble() > 0){
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
                     }else{

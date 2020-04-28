@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class CoinResponse(
-    val status: Status,
+    val status: Status?,
     @SerializedName("data") val coins: ArrayList<Coin>
 )
 
@@ -23,7 +23,7 @@ data class Coin(
     @SerializedName("last_updated") val lastUpdated: String,
     @SerializedName("max_supply") val maxSupply: String,
     @SerializedName("total_supply") val totalSupply: String,
-    val quote: Quote
+    val quote: Quote?
 ):Serializable
 
 data class Quote(@SerializedName("USD") val usd: Usd):Serializable

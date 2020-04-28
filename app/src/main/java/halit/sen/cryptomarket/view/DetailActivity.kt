@@ -48,17 +48,17 @@ class DetailActivity : AppCompatActivity() {
         setArrows()
     }
     private fun setArrows(){
-            if((coin.quote.usd.percentChangePerHour).toDouble() >= 0){
+            if((coin.quote!!.usd.percentChangePerHour).toDouble() >= 0){
                 binding.oneHourPercentArrow.setImageResource(R.drawable.green_arrow_icon)
             }else{
                 binding.oneHourPercentArrow.setImageResource(R.drawable.red_arrow_icon)
             }
-            if((coin.quote.usd.percentChangePerWeek).toDouble() >= 0){
+            if((coin.quote!!.usd.percentChangePerWeek).toDouble() >= 0){
                 binding.oneWeekPercentArrow.setImageResource(R.drawable.green_arrow_icon)
             }else{
                 binding.oneWeekPercentArrow.setImageResource(R.drawable.red_arrow_icon)
             }
-            if((coin.quote.usd.percentChangePerDay).toDouble()>= 0){
+            if((coin.quote!!.usd.percentChangePerDay).toDouble()>= 0){
                 binding.oneDayPercentArrow.setImageResource(R.drawable.green_arrow_icon)
             }else{
                 binding.oneDayPercentArrow.setImageResource(R.drawable.red_arrow_icon)

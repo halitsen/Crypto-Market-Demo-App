@@ -49,7 +49,7 @@ class FavoritesActivity : AppCompatActivity() {
             TimeUnit.MILLISECONDS
         )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable ->
+            .subscribe({ long -> viewModel.refresh() }) { throwable ->
                 onTimerObservableError(
                     throwable, this
                 )
@@ -80,7 +80,7 @@ class FavoritesActivity : AppCompatActivity() {
                 TimeUnit.MILLISECONDS
             )
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable ->
+                .subscribe({ long -> viewModel.refresh() }) { throwable ->
                     onTimerObservableError(
                         throwable,
                         this

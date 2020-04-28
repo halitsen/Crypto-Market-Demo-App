@@ -52,7 +52,7 @@ class DetailViewModel(val coin: Coin, val preferences: SharedPreference) : ViewM
         get() = _addFavText
 
     init {
-        _price.value = AppUtils.getFormattedPrice((coin.quote.usd.price).toDouble())
+        _price.value = AppUtils.getFormattedPrice((coin.quote!!.usd.price).toDouble())
         _title.value = coin.name
         _oneHourChange.value =
             AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())

@@ -24,13 +24,15 @@ class FavoritesViewModel(val preferences: SharedPreference) : ViewModel() {
         DaggerAppComponent.create().inject(this)
     }
 
-    fun refresh(long: Long) {
-        getCoins(long)
+    fun refresh() {
+        getCoins()
     }
 
-    private fun getCoins(long: Long) {
-        val observable = coinService.getCoins()
-        observable.subscribeOn(Schedulers.newThread()).observeOn(AndroidSchedulers.mainThread())
+    private fun getCoins() {
+        coinService
+            .getCoins()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .map { result: CoinResponse -> filterFavoriteCoins(result.coins) }
             .subscribe({ coins ->
                 _coins.value = coins
