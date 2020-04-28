@@ -41,7 +41,7 @@ class CoinsActivity : AppCompatActivity() {
          disposable = Observable.interval(1000, 5000,
                 TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
+                .subscribe({ long -> viewModel.refresh() }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
         coinsAdapter =
             CoinsAdapter(preferences)
 
@@ -63,7 +63,7 @@ class CoinsActivity : AppCompatActivity() {
             disposable = Observable.interval(1000, 5000,
                 TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ long: Long -> viewModel.refresh(long) }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
+                .subscribe({ long -> viewModel.refresh() }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
         }
     }
 
