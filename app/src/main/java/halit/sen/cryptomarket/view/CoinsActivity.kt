@@ -15,10 +15,10 @@ import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
 import halit.sen.cryptomarket.utils.AppUtils.Companion.hasNetwork
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
 import halit.sen.cryptomarket.utils.AppUtils.Companion.openInfoDialog
-import halit.sen.cryptomarket.utils.Const.Companion.DAILY
-import halit.sen.cryptomarket.utils.Const.Companion.PER_HOUR
-import halit.sen.cryptomarket.utils.Const.Companion.WEEKLY
 import halit.sen.cryptomarket.utils.SharedPreference
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.DAILY
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.PER_HOUR
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.WEEKLY
 import halit.sen.cryptomarket.viewModel.CoinsViewModel
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -26,47 +26,24 @@ import io.reactivex.disposables.Disposable
 import java.util.concurrent.TimeUnit
 
 class CoinsActivity : AppCompatActivity() {
-    lateinit var viewModel: CoinsViewModel
-    lateinit var binding: ActivityCoinsBinding
+    private lateinit var viewModel: CoinsViewModel
+    private lateinit var binding: ActivityCoinsBinding
     private lateinit var coinsAdapter: CoinsAdapter
     private lateinit var preferences: SharedPreference
     private lateinit var disposable: Disposable
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
-        preferences = SharedPreference(this)
-        binding.lifecycleOwner = this
-        if(!hasNetwork(this)){
-            openInfoDialog(this,getString(R.string.internet_connection_warning_text),getString(R.string.error))
-        }
-        viewModel = ViewModelProviders.of(this).get(CoinsViewModel::class.java)
-         disposable = Observable.interval(1000, 5000,
-                TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ long -> viewModel.refresh() }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
-        coinsAdapter =
-            CoinsAdapter(preferences)
 
-        setSupportActionBar(binding.mainToolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        binding.coinRecyclerView.apply {
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = coinsAdapter
-            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = true
-            setHasFixedSize(true)
-        }
-
+        initVariables()
+        setDisposable()
         observeViewModel()
     }
 
     override fun onResume() {
         super.onResume()
         if (disposable.isDisposed) {
-            disposable = Observable.interval(1000, 5000,
-                TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ long -> viewModel.refresh() }) { throwable: Throwable -> onTimerObservableError(throwable,this) }
+            setDisposable()
         }
     }
 
@@ -88,6 +65,43 @@ class CoinsActivity : AppCompatActivity() {
         })
     }
 
+    private fun setDisposable() {
+        disposable = Observable.interval(
+            1000, 5000,
+            TimeUnit.MILLISECONDS
+        )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({viewModel.refresh() }) { throwable: Throwable ->
+                onTimerObservableError(
+                    throwable,
+                    this
+                )
+            }
+    }
+
+    private fun initVariables() {
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
+        preferences = SharedPreference(this)
+        binding.lifecycleOwner = this
+        if (!hasNetwork(this)) {
+            openInfoDialog(
+                this,
+                getString(R.string.internet_connection_warning_text),
+                getString(R.string.error)
+            )
+        }
+        viewModel = ViewModelProviders.of(this).get(CoinsViewModel::class.java)
+        coinsAdapter = CoinsAdapter(preferences)
+        setSupportActionBar(binding.mainToolbar)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+        binding.coinRecyclerView.apply {
+            layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            adapter = coinsAdapter
+            (itemAnimator as SimpleItemAnimator).supportsChangeAnimations = true
+            setHasFixedSize(true)
+        }
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -102,16 +116,16 @@ class CoinsActivity : AppCompatActivity() {
                 startActivity(favoritesIntent)
             }
             R.id.hour -> {
-                preferences.setpercentageChoice(PER_HOUR)
+                preferences.setPercentageChoice(PER_HOUR)
                 coinsAdapter.notifyDataSetChanged()
             }
             R.id.daily -> {
-                preferences.setpercentageChoice(DAILY)
+                preferences.setPercentageChoice(DAILY)
                 coinsAdapter.notifyDataSetChanged()
 
             }
             R.id.weekly -> {
-                preferences.setpercentageChoice(WEEKLY)
+                preferences.setPercentageChoice(WEEKLY)
                 coinsAdapter.notifyDataSetChanged()
             }
         }

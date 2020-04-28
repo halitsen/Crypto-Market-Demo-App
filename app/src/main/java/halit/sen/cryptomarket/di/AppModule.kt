@@ -13,8 +13,6 @@ import java.util.concurrent.TimeUnit
 @Module
 class AppModule {
 
-    private var BASE_URL = "https://pro-api.coinmarketcap.com/"
-
     @Provides
     fun provideCoinsApi(): CoinApi {
         val httpClient = OkHttpClient.Builder()
@@ -28,7 +26,6 @@ class AppModule {
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
-
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
@@ -36,8 +33,14 @@ class AppModule {
             .client(httpClient)
             .build().create(CoinApi::class.java)
     }
+
     @Provides
-    fun provideCoinService(): CoinService{
+    fun provideCoinService(): CoinService {
         return CoinService()
+    }
+
+    companion object {
+        private const val BASE_URL = "https://pro-api.coinmarketcap.com/"
+
     }
 }

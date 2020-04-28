@@ -10,13 +10,14 @@ import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.model.data.Coin
 import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedPercentageValue
 import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedTime
-import halit.sen.cryptomarket.utils.Const.Companion.DAILY
-import halit.sen.cryptomarket.utils.Const.Companion.PER_HOUR
-import halit.sen.cryptomarket.utils.Const.Companion.WEEKLY
 import halit.sen.cryptomarket.utils.SharedPreference
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.DAILY
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.PER_HOUR
+import halit.sen.cryptomarket.utils.SharedPreference.Companion.WEEKLY
 import kotlinx.android.synthetic.main.coin_list_item.view.*
 
-class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>(){
+class CoinsAdapter(val preference: SharedPreference) :
+    RecyclerView.Adapter<CoinsAdapter.CoinsViewHolder>() {
 
     var data = listOf<Coin>()
         set(value) {
@@ -26,13 +27,12 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
 
     override fun getItemCount() = data.size
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CoinsViewHolder (
-      LayoutInflater.from(parent.context).inflate(R.layout.coin_list_item,parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = CoinsViewHolder(
+        LayoutInflater.from(parent.context).inflate(R.layout.coin_list_item, parent, false)
     )
 
-
     override fun onBindViewHolder(holder: CoinsViewHolder, position: Int) {
-        holder.bind(data.get(position),preference)
+        holder.bind(data.get(position), preference)
         holder.itemView.setOnClickListener {
             val detailIntent = Intent(holder.itemView.context, DetailActivity::class.java)
             detailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -41,58 +41,64 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
         }
     }
 
+    class CoinsViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-    class CoinsViewHolder(view: View): RecyclerView.ViewHolder(view){
-
-        val coinName = view.coin_name
-        val coinSymbol = view.coin_symbol
-        val lastUpdate = view.coin_last_update
-        val coinPrice = view.coin_price
-        val coinArrow = view.coin_percentage_arrow
+        val coinName = view.coinName
+        val coinSymbol = view.coinSymbol
+        val lastUpdate = view.coinLastUpdate
+        val coinPrice = view.coinPrice
+        val coinArrow = view.coinPercentageArrow
         val coinChangePercentage = view.coin_change_percentage
 
-        fun bind(coin: Coin, preferences:SharedPreference){
+        fun bind(coin: Coin, preferences: SharedPreference) {
 
-            when(preferences.getpercentageChoice()){
-                PER_HOUR ->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerHour).toDouble())
-                    if((coin.quote.usd.percentChangePerHour).toDouble() > 0){
-                        coinArrow.setImageResource(R.drawable.green_arrow_icon)
-                    }else{
-                        coinArrow.setImageResource(R.drawable.red_arrow_icon)
-                    }
+            when (preferences.getPercentageChoice()) {
+                PER_HOUR -> {
+                    coinChangePercentage.text =
+                        getFormattedPercentageValue((coin.quote?.usd?.percentChangePerHour)?.toDouble())
+                    coinArrow.setImageResource(
+                        if ((coin.quote?.usd?.percentChangePerHour)?.let { it.toDouble() > 0 }!!)
+                            (R.drawable.green_arrow_icon)
+                        else
+                            (R.drawable.red_arrow_icon)
+                    )
                 }
-                DAILY->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerDay).toDouble())
-                    if((coin.quote.usd.percentChangePerDay).toDouble() > 0){
-                        coinArrow.setImageResource(R.drawable.green_arrow_icon)
-                    }else{
-                        coinArrow.setImageResource(R.drawable.red_arrow_icon)
-                    }
+                DAILY -> {
+                    coinChangePercentage.text =
+                        getFormattedPercentageValue((coin.quote?.usd?.percentChangePerDay)?.toDouble())
+                    coinArrow.setImageResource(
+                        if ((coin.quote?.usd?.percentChangePerDay)?.let { it.toDouble() > 0 }!!) {
+                            (R.drawable.green_arrow_icon)
+                        } else {
+                            (R.drawable.red_arrow_icon)
+                        }
+                    )
                 }
-                WEEKLY->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerWeek).toDouble())
-                    if((coin.quote.usd.percentChangePerWeek).toDouble() > 0){
-                        coinArrow.setImageResource(R.drawable.green_arrow_icon)
-                    }else{
-                        coinArrow.setImageResource(R.drawable.red_arrow_icon)
-                    }
+                WEEKLY -> {
+                    coinChangePercentage.text =
+                        getFormattedPercentageValue((coin.quote?.usd?.percentChangePerWeek)?.toDouble())
+                    coinArrow.setImageResource(
+                        if ((coin.quote?.usd?.percentChangePerWeek)?.let { it.toDouble() > 0 }!!) {
+                            (R.drawable.green_arrow_icon)
+                        } else {
+                            (R.drawable.red_arrow_icon)
+                        }
+                    )
                 }
-                else ->{
-                    coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerHour).toDouble())
-                    if((coin.quote.usd.percentChangePerHour).toDouble() > 0){
+                else -> {
+                    coinChangePercentage.text =
+                        getFormattedPercentageValue((coin.quote?.usd?.percentChangePerHour)?.toDouble())
+                    if ((coin.quote?.usd?.percentChangePerHour)?.let { it.toDouble() > 0 }!!) {
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
-                    }else{
+                    } else {
                         coinArrow.setImageResource(R.drawable.red_arrow_icon)
                     }
                 }
             }
             coinName.text = coin.name
             coinSymbol.text = coin.symbol
-            coinPrice.text = getFormattedPrice((coin.quote.usd.price).toDouble())
-            lastUpdate.text = getFormattedTime(coin.lastUpdated)
+            coinPrice.text = getFormattedPrice((coin.quote.usd.price)?.toDouble())
+            lastUpdate.text = getFormattedTime(coin.lastUpdated!!)
         }
-
     }
-
 }

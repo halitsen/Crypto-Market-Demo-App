@@ -29,18 +29,16 @@ class AppUtils {
                 .content(content)
                 .positiveText("OK")
                 .positiveColor(R.color.black)
-                .onPositive { dialog1, which -> dialog1.dismiss() } //todo day mode da 'OK' text görünmüyor..
+                .onPositive { dialog, _ -> dialog.dismiss() }
                 .show()
-            dialog.titleView.textSize = 16f
-            dialog.contentView!!.textSize = 14f
         }
 
-        fun getFormattedPrice(price: Double): String {
+        fun getFormattedPrice(price: Double?): String {
             val formattedPrice = DecimalFormat("0.000").format(price)
             return "$ $formattedPrice"
         }
 
-        fun getFormattedPercentageValue(percentage: Double): String {
+        fun getFormattedPercentageValue(percentage: Double?): String {
             val formattedPrice = DecimalFormat("0.00").format(percentage)
             return "$formattedPrice %"
         }
@@ -56,7 +54,5 @@ class AppUtils {
                 Toast.LENGTH_LONG
             ).show()
         }
-
-
     }
 }

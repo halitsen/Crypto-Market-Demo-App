@@ -11,7 +11,7 @@ import halit.sen.cryptomarket.model.data.Coin
 import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.utils.SharedPreference
 
-class DetailViewModel(context: Context, val coin: Coin, val preferences: SharedPreference) :
+class DetailViewModel(context: Context, val coin: Coin?, val preferences: SharedPreference) :
     ViewModel() {
 
     private val _title = MutableLiveData<String>()
@@ -55,33 +55,32 @@ class DetailViewModel(context: Context, val coin: Coin, val preferences: SharedP
         get() = _addFavText
 
     init {
-        _price.value = AppUtils.getFormattedPrice((coin.quote!!.usd.price).toDouble())
-        _title.value = coin.name
+        _price.value = AppUtils.getFormattedPrice((coin?.quote?.usd?.price)?.toDouble())
+        _title.value = coin?.name.orEmpty()
         _oneHourChange.value =
-            AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerHour).toDouble())
+            AppUtils.getFormattedPercentageValue((coin?.quote?.usd?.percentChangePerHour)?.toDouble())
         _dailyChange.value =
-            AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerDay).toDouble())
+            AppUtils.getFormattedPercentageValue((coin?.quote?.usd?.percentChangePerDay)?.toDouble())
         _weeklyChange.value =
-            AppUtils.getFormattedPercentageValue((coin.quote.usd.percentChangePerWeek).toDouble())
+            AppUtils.getFormattedPercentageValue((coin?.quote?.usd?.percentChangePerWeek)?.toDouble())
         _dailyVolume.value =
-            AppUtils.getFormattedPercentageValue((coin.quote.usd.volume24Hour).toDouble())
+            AppUtils.getFormattedPercentageValue((coin?.quote?.usd?.volume24Hour)?.toDouble())
         _marketCap.value =
-            AppUtils.getFormattedPercentageValue((coin.quote.usd.marketCap).toDouble())
-        _totalSupply.value = coin.totalSupply
-        _maxSupply.value = coin.maxSupply
+            AppUtils.getFormattedPercentageValue((coin?.quote?.usd?.marketCap)?.toDouble())
+        _totalSupply.value = coin?.totalSupply.orEmpty()
+        _maxSupply.value = coin?.maxSupply.orEmpty()
         if (isCoinFavorite()) {
             _addFavText.value = context.getString(R.string.remove_from_fav)
         } else {
             _addFavText.value = context.getString(R.string.add_to_fav)
         }
-
     }
 
     private fun isCoinFavorite(): Boolean {
         val coins = preferences.getCoins()
         var isFav = false
         for (c in coins) {
-            if (c.id.equals(coin.id)) {
+            if (c.id!!.equals(coin?.id)) {
                 isFav = true
             }
         }
@@ -90,7 +89,7 @@ class DetailViewModel(context: Context, val coin: Coin, val preferences: SharedP
 
     private fun addFavorites() {
         val coins = preferences.getCoins()
-        coins.add(coin)
+        coins.add(coin!!)
         preferences.setCoins(coins)
         _addFavText.value = "Remove from Favorites"
     }
@@ -99,7 +98,7 @@ class DetailViewModel(context: Context, val coin: Coin, val preferences: SharedP
         val coins = preferences.getCoins()
         val coinToRemove = ArrayList<Coin>()
         for (c in coins) {
-            if (c.id.equals(coin.id)) {
+            if (c.id!!.equals(coin!!.id)) {
                 coinToRemove.add(c)
             }
         }

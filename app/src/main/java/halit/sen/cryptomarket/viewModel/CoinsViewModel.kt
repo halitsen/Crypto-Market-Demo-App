@@ -15,9 +15,8 @@ class CoinsViewModel : ViewModel() {
     @Inject
     lateinit var coinService: CoinService
 
-    private val _coins = MutableLiveData<ArrayList<Coin>>()
-    val coins
-        get() = _coins
+    var coins = MutableLiveData<ArrayList<Coin>>()
+    private set
 
     init {
         DaggerAppComponent.create().inject(this)
@@ -33,8 +32,8 @@ class CoinsViewModel : ViewModel() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .map { result: CoinResponse -> result.coins }
-            .subscribe({ coins ->
-                _coins.value = coins
+            .subscribe({ coinList ->
+                coins.value = coinList
             }) { error -> //does nothing on error
             }
     }
