@@ -17,6 +17,9 @@ import android.app.Activity
 import android.view.View
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
+import halit.sen.cryptomarket.utils.Const.Companion.DAILY
+import halit.sen.cryptomarket.utils.Const.Companion.PER_HOUR
+import halit.sen.cryptomarket.utils.Const.Companion.WEEKLY
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -35,10 +38,14 @@ class FavoritesActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_favorites)
         preferences = SharedPreference(this)
-        if(!AppUtils.hasNetwork(this)){
-            AppUtils.openInfoDialog(this, "Check your internet connection and try again!!", "Error")
+        if (!AppUtils.hasNetwork(this)) {
+            AppUtils.openInfoDialog(
+                this,
+                getString(R.string.internet_connection_warning_text),
+                getString(R.string.error)
+            )
         }
-        if(preferences.getCoins().size == 0){
+        if (preferences.getCoins().size == 0) {
             binding.emptyFavText.visibility = View.VISIBLE
         }
         val viewModelFactory = FavoritesViewModelFactory(preferences)
@@ -102,10 +109,10 @@ class FavoritesActivity : AppCompatActivity() {
     private fun observeViewModel() {
         viewModel.coins.observe(this, Observer { coins ->
             coins?.let {
-                if(coins.size==0){
+                if (coins.size == 0) {
                     binding.coinRecyclerView.visibility = View.GONE
                     binding.emptyFavText.visibility = View.VISIBLE
-                }else{
+                } else {
                     binding.coinRecyclerView.visibility = View.VISIBLE
                     binding.emptyFavText.visibility = View.GONE
                     coinsAdapter.data = coins
@@ -123,17 +130,17 @@ class FavoritesActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
         when (item.itemId) {
-            halit.sen.cryptomarket.R.id.hour -> {
-                preferences.setpercentageChoice("perHour")
+            R.id.hour -> {
+                preferences.setpercentageChoice(PER_HOUR)
                 coinsAdapter.notifyDataSetChanged()
             }
             R.id.daily -> {
-                preferences.setpercentageChoice("daily")
+                preferences.setpercentageChoice(DAILY)
                 coinsAdapter.notifyDataSetChanged()
 
             }
             R.id.weekly -> {
-                preferences.setpercentageChoice("weekly")
+                preferences.setpercentageChoice(WEEKLY)
                 coinsAdapter.notifyDataSetChanged()
             }
         }

@@ -52,7 +52,7 @@ class AppUtils {
 
         fun onTimerObservableError(throwable: Throwable, context: Context) {
             Toast.makeText(
-                context, "OnError in Observable Timer",
+                context, context.getString(R.string.timer_error_message),
                 Toast.LENGTH_LONG
             ).show()
         }

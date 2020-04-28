@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Crypto Market</string>
+    <string name="timer_error_message">OnError in Observable Timer</string>
+    <string name="internet_connection_warning_text">Check your internet connection and try again!!</string>
+    <string name="error">Error</string>
+    <string name="remove_from_fav">Remove from Favorites</string>
+    <string name="add_to_fav">Add to Favorites</string>
+    <string name="one_hour_text">1 Hour</string>
+    <string name="twentyfour_hour_text">24 Hours</string>
+    <string name="one_week_text">1 Week</string>
+    <string name="total_supply_text">Total Supply</string>
+    <string name="max_supply_text">Max Supply</string>
+    <string name="daily_volume_text">24h Volume</string>
+    <string name="market_cap_text">Market Cap</string>
+    <string name="favorite_empty_text">You dont have a favorite coin yet!</string>
+    <string name="favorite_coins">Favorite Coins</string>
 </resources>

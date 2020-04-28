@@ -31,7 +31,7 @@ class DetailActivity : AppCompatActivity() {
         if (bundle != null) {
             coin = bundle.getSerializable("coin") as Coin
         }
-        val viewModelFactory = DetailViewModelFactory(coin,preferences)
+        val viewModelFactory = DetailViewModelFactory(this,coin,preferences)
         viewModel = ViewModelProviders.of(this, viewModelFactory).get(DetailViewModel::class.java)
         binding.detailViewModel = viewModel
         binding.setLifecycleOwner(this)

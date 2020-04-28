@@ -15,6 +15,9 @@ import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
 import halit.sen.cryptomarket.utils.AppUtils.Companion.hasNetwork
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
 import halit.sen.cryptomarket.utils.AppUtils.Companion.openInfoDialog
+import halit.sen.cryptomarket.utils.Const.Companion.DAILY
+import halit.sen.cryptomarket.utils.Const.Companion.PER_HOUR
+import halit.sen.cryptomarket.utils.Const.Companion.WEEKLY
 import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.CoinsViewModel
 import io.reactivex.Observable
@@ -35,7 +38,7 @@ class CoinsActivity : AppCompatActivity() {
         preferences = SharedPreference(this)
         binding.lifecycleOwner = this
         if(!hasNetwork(this)){
-            openInfoDialog(this,"Check your internet connection and try again!!","Error")
+            openInfoDialog(this,getString(R.string.internet_connection_warning_text),getString(R.string.error))
         }
         viewModel = ViewModelProviders.of(this).get(CoinsViewModel::class.java)
          disposable = Observable.interval(1000, 5000,
@@ -99,16 +102,16 @@ class CoinsActivity : AppCompatActivity() {
                 startActivity(favoritesIntent)
             }
             R.id.hour -> {
-                preferences.setpercentageChoice("perHour")
+                preferences.setpercentageChoice(PER_HOUR)
                 coinsAdapter.notifyDataSetChanged()
             }
             R.id.daily -> {
-                preferences.setpercentageChoice("daily")
+                preferences.setpercentageChoice(DAILY)
                 coinsAdapter.notifyDataSetChanged()
 
             }
             R.id.weekly -> {
-                preferences.setpercentageChoice("weekly")
+                preferences.setpercentageChoice(WEEKLY)
                 coinsAdapter.notifyDataSetChanged()
             }
         }

@@ -10,6 +10,9 @@ import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.model.data.Coin
 import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedPercentageValue
 import halit.sen.cryptomarket.utils.AppUtils.Companion.getFormattedTime
+import halit.sen.cryptomarket.utils.Const.Companion.DAILY
+import halit.sen.cryptomarket.utils.Const.Companion.PER_HOUR
+import halit.sen.cryptomarket.utils.Const.Companion.WEEKLY
 import halit.sen.cryptomarket.utils.SharedPreference
 import kotlinx.android.synthetic.main.coin_list_item.view.*
 
@@ -51,7 +54,7 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
         fun bind(coin: Coin, preferences:SharedPreference){
 
             when(preferences.getpercentageChoice()){
-                "perHour" ->{
+                PER_HOUR ->{
                     coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerHour).toDouble())
                     if((coin.quote.usd.percentChangePerHour).toDouble() > 0){
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
@@ -59,7 +62,7 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
                         coinArrow.setImageResource(R.drawable.red_arrow_icon)
                     }
                 }
-                "daily"->{
+                DAILY->{
                     coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerDay).toDouble())
                     if((coin.quote.usd.percentChangePerDay).toDouble() > 0){
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
@@ -67,7 +70,7 @@ class CoinsAdapter (val preference: SharedPreference): RecyclerView.Adapter<Coin
                         coinArrow.setImageResource(R.drawable.red_arrow_icon)
                     }
                 }
-                "weekly"->{
+                WEEKLY->{
                     coinChangePercentage.text = getFormattedPercentageValue((coin.quote!!.usd.percentChangePerWeek).toDouble())
                     if((coin.quote.usd.percentChangePerWeek).toDouble() > 0){
                         coinArrow.setImageResource(R.drawable.green_arrow_icon)
