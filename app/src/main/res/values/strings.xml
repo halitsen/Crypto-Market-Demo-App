@@ -12,6 +12,7 @@
     <string name="max_supply_text">Max Supply</string>
     <string name="daily_volume_text">24h Volume</string>
     <string name="market_cap_text">Market Cap</string>
-    <string name="favorite_empty_text">You dont have a favorite coin yet!</string>
+    <string name="favorite_empty_text">You don\'t have a favorite coin yet!</string>
     <string name="favorite_coins">Favorite Coins</string>
+    <string name="fetch_data_error_text">An error occurred while fetching data!</string>
 </resources>

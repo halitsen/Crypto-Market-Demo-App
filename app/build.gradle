@@ -68,6 +68,8 @@ dependencies {
 
     //material dialog
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
+    //progress
+    implementation 'com.kaopiz:kprogresshud:1.1.0'
 
     //test
     testImplementation "org.mockito:mockito-inline:$mockitoVersion"

@@ -13,6 +13,7 @@ import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.utils.SharedPreference
 import halit.sen.cryptomarket.viewModel.*
 import android.view.View
+import com.kaopiz.kprogresshud.KProgressHUD
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
 import halit.sen.cryptomarket.utils.SharedPreference.Companion.DAILY
@@ -31,10 +32,13 @@ class FavoritesActivity : AppCompatActivity() {
     private lateinit var coinsAdapter: CoinsAdapter
     private lateinit var preferences: SharedPreference
     private lateinit var disposable: Disposable
+    private lateinit var progress: KProgressHUD
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initVariables()
+        viewModel.initialRequest()
         observeViewModel()
         binding.backIcon.setOnClickListener {
             finish()
@@ -82,14 +86,13 @@ class FavoritesActivity : AppCompatActivity() {
                 getString(R.string.error)
             )
         }
-        if (preferences.getCoins().size == 0) {
-            binding.emptyFavText.visibility = View.VISIBLE
-        }
         val viewModelFactory = FavoritesViewModelFactory(preferences)
         viewModel =
             ViewModelProviders.of(this, viewModelFactory).get(FavoritesViewModel::class.java)
         setDisposable()
         binding.setLifecycleOwner(this)
+        progress = KProgressHUD(this)
+        AppUtils.createProgress(progress)
         setSupportActionBar(binding.favoritesToolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
         coinsAdapter =
@@ -111,8 +114,22 @@ class FavoritesActivity : AppCompatActivity() {
                     binding.emptyFavText.visibility = View.GONE
                     coinsAdapter.data = coins
                 }
-
+                binding.errorText.visibility = View.GONE
             }
+        })
+        viewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading)
+                AppUtils.showProgress(progress)
+            else
+                AppUtils.hideProgress(progress)
+        })
+        viewModel.isError.observe(this, Observer { isError ->
+            (if (isError) {
+                binding.errorText.visibility = View.VISIBLE
+                binding.emptyFavText.visibility = View.GONE
+            } else {
+                binding.errorText.visibility = View.GONE
+            })
         })
     }
 

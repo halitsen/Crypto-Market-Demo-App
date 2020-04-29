@@ -60,9 +60,23 @@
             android:visibility="gone"
             android:textSize="18sp"
             android:text="@string/favorite_empty_text"
-            android:layout_centerInParent="true">
+            android:layout_centerInParent="true"/>
 
-        </TextView>
+        <TextView
+            android:id="@+id/error_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingRight="12dp"
+            android:paddingLeft="12dp"
+            android:minLines="3"
+            app:fontFamily="sans-serif"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            android:textSize="18sp"
+            android:text="@string/fetch_data_error_text"
+            android:layout_centerInParent="true"/>
+
     </RelativeLayout>
 
 </layout>

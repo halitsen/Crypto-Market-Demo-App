@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.SimpleItemAnimator
+import com.kaopiz.kprogresshud.KProgressHUD
 import halit.sen.cryptomarket.R
 import halit.sen.cryptomarket.databinding.ActivityCoinsBinding
+import halit.sen.cryptomarket.utils.AppUtils
 import halit.sen.cryptomarket.utils.AppUtils.Companion.hasNetwork
 import halit.sen.cryptomarket.utils.AppUtils.Companion.onTimerObservableError
 import halit.sen.cryptomarket.utils.AppUtils.Companion.openInfoDialog
@@ -31,11 +34,14 @@ class CoinsActivity : AppCompatActivity() {
     private lateinit var coinsAdapter: CoinsAdapter
     private lateinit var preferences: SharedPreference
     private lateinit var disposable: Disposable
+    private lateinit var progress: KProgressHUD
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         initVariables()
+        viewModel.initialRequest()
         setDisposable()
         observeViewModel()
     }
@@ -61,7 +67,21 @@ class CoinsActivity : AppCompatActivity() {
         viewModel.coins.observe(this, Observer { coins ->
             coins?.let {
                 coinsAdapter.data = coins
+                binding.errorText.visibility = View.GONE
             }
+        })
+        viewModel.isLoading.observe(this, Observer { isLoading ->
+            if (isLoading)
+                AppUtils.showProgress(progress)
+            else
+                AppUtils.hideProgress(progress)
+        })
+        viewModel.isError.observe(this, Observer { isError ->
+            binding.errorText.visibility = (if (isError) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            })
         })
     }
 
@@ -71,7 +91,7 @@ class CoinsActivity : AppCompatActivity() {
             TimeUnit.MILLISECONDS
         )
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({viewModel.refresh() }) { throwable: Throwable ->
+            .subscribe({ viewModel.refresh() }) { throwable: Throwable ->
                 onTimerObservableError(
                     throwable,
                     this
@@ -83,6 +103,8 @@ class CoinsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_coins)
         preferences = SharedPreference(this)
         binding.lifecycleOwner = this
+        progress = KProgressHUD(this)
+        AppUtils.createProgress(progress)
         if (!hasNetwork(this)) {
             openInfoDialog(
                 this,
