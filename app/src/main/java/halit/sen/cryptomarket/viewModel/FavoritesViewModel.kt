@@ -1,5 +1,6 @@
 package halit.sen.cryptomarket.viewModel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import halit.sen.cryptomarket.di.DaggerAppComponent
@@ -18,6 +19,10 @@ class FavoritesViewModel(val preferences: SharedPreference) : ViewModel() {
 
     var coins = MutableLiveData<ArrayList<Coin>>()
     private set
+    var isLoading = MutableLiveData<Boolean>()
+        private set
+    var isError = MutableLiveData<Boolean>()
+        private set
 
     init {
         DaggerAppComponent.create().inject(this)
@@ -35,7 +40,25 @@ class FavoritesViewModel(val preferences: SharedPreference) : ViewModel() {
             .map { result: CoinResponse -> filterFavoriteCoins(result.coins!!) }
             .subscribe({ coinList ->
                 coins.value = coinList
-            }) { error -> //do nothing on error
+            }) {
+                //do not update UI when error occured every 5sec
+            }
+    }
+
+    fun initialRequest() {
+        isLoading.value = true
+        coinService
+            .getCoins()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .map { result: CoinResponse -> filterFavoriteCoins(result.coins!!) }
+            .subscribe({ coinList ->
+                coins.value = coinList
+                isLoading.value = false
+                isError.value = false
+            }) {
+                isError.value = true
+                isLoading.value = false
             }
     }
 

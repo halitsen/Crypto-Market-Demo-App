@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkInfo
 import android.widget.Toast
 import com.afollestad.materialdialogs.MaterialDialog
+import com.kaopiz.kprogresshud.KProgressHUD
 import halit.sen.cryptomarket.R
 import java.text.DecimalFormat
 
@@ -20,6 +21,25 @@ class AppUtils {
             if (activeNetwork != null && activeNetwork.isConnected)
                 isConnected = true
             return isConnected
+        }
+
+        fun showProgress(progress: KProgressHUD){
+            progress.show()
+        }
+
+        fun hideProgress(progress: KProgressHUD){
+            progress.dismiss()
+        }
+
+        fun createProgress(progress: KProgressHUD){
+            progress
+                .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setBackgroundColor(R.color.colorPrimaryDark)
+                .setWindowColor(R.color.colorPrimaryDark)
+                .setLabel("Loading...")
+                .setCancellable(false)
+                .setAnimationSpeed(2)
+                .setDimAmount(0.5f);
         }
 
         @SuppressLint("ResourceAsColor")
